@@ -1,0 +1,9 @@
+{
+    "App": {
+        "resources": {
+            "ViaCep": {
+                "apiUrl": "https://viacep.com.br/ws"
+            }
+        }
+    }
+}

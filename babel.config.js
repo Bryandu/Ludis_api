@@ -10,7 +10,17 @@ module.exports = {
     ],
     '@babel/preset-typescript'
   ],
-  ignore: [
-    '**/*.spec.ts'
-  ]
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['.'],
+        alias: {
+          '^@/(.+)': './src/\\1'
+        }
+      }
+    ],
+    ['@babel/plugin-proposal-decorators', { legacy: true }]
+  ],
+  ignore: ['**/*.spec.ts']
 }
