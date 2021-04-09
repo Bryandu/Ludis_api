@@ -1,5 +1,8 @@
 {
     "App": {
+        "database": {
+            "mongoUrl": "mongodb://localhost:27017/ludis_api"
+        },
         "resources": {
             "ViaCep": {
                 "apiUrl": "https://viacep.com.br/ws"
