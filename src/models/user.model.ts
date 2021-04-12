@@ -5,10 +5,29 @@ const schema = (schema: object) => {
   return new Schema(schema)
 }
 
-const PostsUserSchema = schema({
-  postDate: Date
-})
 const idSchema = schema({ id: String })
+const badgesSchema = schema({
+  badgeType: String,
+  amount: Number,
+  givenby: String
+})
+const postsUserSchema = schema({
+  postDate: Date,
+  postFiles: [String],
+  description: String,
+  localization: String,
+  author: String,
+  markings: [
+    {
+      users: [{ type: idSchema }],
+      groups: [{ type: idSchema }],
+      companies: [{ type: idSchema }]
+    }
+  ],
+  badges: [
+    { type: badgesSchema }
+  ]
+})
 const nameSchema = schema({ name: String })
 const friendsIdSchema = schema({ id: String })
 const addressSchema = schema({
@@ -26,19 +45,19 @@ const UserSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   photo: String,
-  address: {
-    addressSchema
-  },
+  address: [{
+    type: addressSchema
+  }],
   telephone: Number,
   cpf: Number,
   favorites: {
-    friends: [idSchema],
-    sports: [nameSchema],
-    places: [idSchema]
+    friends: [{ type: idSchema }],
+    sports: [{ type: nameSchema }],
+    places: [{ type: idSchema }]
   },
-  friends: [friendsIdSchema],
+  friends: [{ type: friendsIdSchema }],
   singupDate: Date,
-  PostsUserSchema: { type: PostsUserSchema }
+  PostsUserSchema: [{ type: postsUserSchema }]
 })
 
 export interface UserDocument extends Omit<User, '_id'>, Document {}

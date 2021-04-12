@@ -7,7 +7,8 @@ export const dbConect = async (): Promise<Mongoose> => {
   return await mongoose.connect(mongoDbConfig.get('mongoUrl'), {
     useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   })
 }
 
