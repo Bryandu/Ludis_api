@@ -1,7 +1,7 @@
 {
     "App": {
         "database": {
-            "mongoUrl": "mongodb://localhost:27017/ludis_api"
+            "mongoUrl": "mongodb+srv://bryan_ludis_adm:2HPdokFfFNbjY199@cluster0.rvfi8.mongodb.net/dbLudis_test?retryWrites=true&w=majority"
         },
         "resources": {
             "ViaCep": {

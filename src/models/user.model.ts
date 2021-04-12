@@ -1,22 +1,31 @@
 import { User } from '@/@types/user.types'
-import mongoose, { Document, Model } from 'mongoose'
+import mongoose, { Document, Model, Schema } from 'mongoose'
 
-const idSchema = new mongoose.Schema({ id: String })
-const nameSchema = new mongoose.Schema({ name: String })
-const addressSchema = new mongoose.Schema({
-  postalCode: Number,
+const schema = (schema: object) => {
+  return new Schema(schema)
+}
+
+const PostsUserSchema = schema({
+  postDate: Date
+})
+const idSchema = schema({ id: String })
+const nameSchema = schema({ name: String })
+const friendsIdSchema = schema({ id: String })
+const addressSchema = schema({
+  zipCode: Number,
   street: String,
   number: Number,
-  federationUnity: String,
+  state: String,
   district: String,
   city: String,
   reference: String,
   country: String
 })
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  photo: String,
   address: {
     addressSchema
   },
@@ -26,7 +35,10 @@ const UserSchema = new mongoose.Schema({
     friends: [idSchema],
     sports: [nameSchema],
     places: [idSchema]
-  }
+  },
+  friends: [friendsIdSchema],
+  singupDate: Date,
+  PostsUserSchema: { type: PostsUserSchema }
 })
 
 export interface UserDocument extends Omit<User, '_id'>, Document {}

@@ -4,6 +4,7 @@ import { Application, json, urlencoded } from 'express'
 import { Server } from '@overnightjs/core'
 import { dbClose, dbConect } from '@/database/database'
 import helmet from 'helmet'
+import { Error } from 'mongoose'
 
 export class SetupApp extends Server {
   constructor (private port = process.env.PORT || 4000) {
@@ -37,7 +38,11 @@ export class SetupApp extends Server {
   }
 
   private async SetupDatabase (): Promise<void> {
-    await dbConect()
+    try {
+      await dbConect()
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   public getApp (): Application {
