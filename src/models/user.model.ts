@@ -42,7 +42,7 @@ const addressSchema = schema({
 })
 const UserSchema = new Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: [true, 'Email must be unique'] },
   password: { type: String, required: true },
   photo: String,
   address: [{

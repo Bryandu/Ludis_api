@@ -27,9 +27,6 @@ export class SetupApp extends Server {
       extended: true
     }))
     this.app.use(json())
-    // this.app.listen(this.port, () => {
-    //   console.log(`App listening on port ${this.port}...`)
-    // })
   }
 
   private SetupControllers (): void {
@@ -48,7 +45,10 @@ export class SetupApp extends Server {
   public getApp (): Application {
     return this.app
   }
-}
 
-// const setup = new SetupApp()
-// setup.init()
+  public startApp (): void {
+    this.app.listen(this.port, () => {
+      console.info(`Server listening on port ${this.port}...`)
+    })
+  }
+}
