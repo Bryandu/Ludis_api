@@ -85,4 +85,24 @@ describe('User functional tests', () => {
     expect(response.body).toEqual(expect.objectContaining(address))
     done()
   })
+
+  it('should return status 409', async (done) => {
+    const newUser = {
+      name: 'Bryan Willes',
+      email: 'Luciana Medes',
+      password: '12345678',
+      telephone: 35991721586,
+      cpf: 12002002020,
+      favorites: {
+        friends: [],
+        sports: [],
+        places: []
+      },
+      friends: []
+    }
+
+    const response = await global.testRequest.post('/users').send(newUser)
+    expect(response.status).toBe(409)
+    done()
+  })
 })

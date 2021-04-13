@@ -1,13 +1,13 @@
 import { Response, Request, NextFunction } from 'express'
 import { ClassErrorMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { UserModel } from '@/models/user.model'
-import mongoose from 'mongoose'
 import { errorMiddleware } from '@/middlewares/errors/error'
 import { InternalError } from '@/utils/errors/internalError'
+import { ValidateError } from '@/utils/errors/validateErrors'
 
 @Controller('users')
 @ClassErrorMiddleware(errorMiddleware)
-export class UserController {
+export class UserController extends ValidateError {
   @Get('')
   private async getAll (req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -28,17 +28,13 @@ export class UserController {
   }
 
   @Post('')
-  private async createUser (req: Request, res: Response, next: NextFunction) {
+  private async createUser (req: Request, res: Response) {
     try {
       const userModel = new UserModel(req.body)
       const result = await userModel.save()
       res.status(201).send(result)
     } catch (error) {
-      if (error instanceof mongoose.Error.ValidationError) {
-        next(new InternalError(error.message, 422, error.name))
-      } else {
-        next(new InternalError(error.message))
-      }
+      this.sendResponseErrorValidade(res, error)
     }
   }
 

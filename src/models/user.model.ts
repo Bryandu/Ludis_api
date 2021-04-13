@@ -1,6 +1,11 @@
 import { User } from '@/@types/user.types'
 import mongoose, { Document, Model, Schema } from 'mongoose'
 
+export interface UserDocument extends Omit<User, '_id'>, Document {}
+export enum CustomDocuments {
+  DUPLICATED = 'DUPLICATED'
+}
+
 const schema = (schema: object) => {
   return new Schema(schema)
 }
@@ -60,6 +65,9 @@ const UserSchema = new Schema({
   PostsUserSchema: [{ type: postsUserSchema }]
 })
 
-export interface UserDocument extends Omit<User, '_id'>, Document {}
+UserSchema.path('email').validate(async (email: string) => {
+  const emailCount = await mongoose.models.User.countDocuments({ email })
+  return !emailCount
+}, 'Already exists in the database', CustomDocuments.DUPLICATED)
 
 export const UserModel: Model<UserDocument> = mongoose.model('User', UserSchema)

@@ -1,0 +1,7 @@
+{
+    "App": {
+        "database": {
+            "mongoUrl": "process.env.DB_STRINGCONECTION"
+        }
+    }
+}
