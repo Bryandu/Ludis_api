@@ -1,5 +1,5 @@
 export class InternalError extends Error {
-  constructor (
+  constructor(
     public message: string,
     protected code: number = 500,
     protected description?: string

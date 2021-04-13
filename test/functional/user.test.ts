@@ -1,10 +1,10 @@
 describe('User functional tests', () => {
-  it('should return 200', async (done) => {
+  it('should return 200', async done => {
     const { status } = await global.testRequest.get('/users')
     expect(status).toBe(200)
     done()
   })
-  it.skip('should create user', async (done) => {
+  it.skip('should create user', async done => {
     const newUser = {
       name: 'Bryan Willes',
       email: 'animeronumero1@hotmail.com',
@@ -24,7 +24,7 @@ describe('User functional tests', () => {
     done()
   })
 
-  it.skip('should get user by id', async (done) => {
+  it.skip('should get user by id', async done => {
     const user = {
       _id: '60745c268ecb32feff0694ea',
       favorites: {
@@ -40,12 +40,14 @@ describe('User functional tests', () => {
       __v: 0
     }
 
-    const response = await global.testRequest.get('/users/60745c268ecb32feff0694ea')
+    const response = await global.testRequest.get(
+      '/users/60745c268ecb32feff0694ea'
+    )
     expect(response.body).toEqual(user)
     done()
   })
 
-  it('should return error status 422', async (done) => {
+  it('should return error status 422', async done => {
     const newUser = {
       name: 'Bryan Willes',
       password: '12345678',
@@ -64,13 +66,15 @@ describe('User functional tests', () => {
     done()
   })
 
-  it('should get user by id throw error 404', async (done) => {
-    const response = await global.testRequest.get('/users/60720ce33a2f066132a3d067')
+  it('should get user by id throw error 404', async done => {
+    const response = await global.testRequest.get(
+      '/users/60720ce33a2f066132a3d067'
+    )
     expect(response.status).toBe(404)
     done()
   })
 
-  it('shold update address user', async (done) => {
+  it('shold update address user', async done => {
     const address = {
       zipCode: 37045015,
       street: 'Rua Joaquim Aparecido Ferreira',
@@ -81,12 +85,14 @@ describe('User functional tests', () => {
       reference: null,
       country: 'Brasil'
     }
-    const response = await global.testRequest.put('/users/address/60745c268ecb32feff0694ea').send(address)
+    const response = await global.testRequest
+      .put('/users/address/60745c268ecb32feff0694ea')
+      .send(address)
     expect(response.body).toEqual(expect.objectContaining(address))
     done()
   })
 
-  it('should return status 409', async (done) => {
+  it('should return status 409', async done => {
     const newUser = {
       name: 'Bryan Willes',
       email: 'Luciana Medes',

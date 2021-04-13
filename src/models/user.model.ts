@@ -6,7 +6,7 @@ export enum CustomDocuments {
   DUPLICATED = 'DUPLICATED'
 }
 
-const schema = (schema: object) => {
+const schema = (schema: Record<string, unknown>) => {
   return new Schema(schema)
 }
 
@@ -29,9 +29,7 @@ const postsUserSchema = schema({
       companies: [{ type: idSchema }]
     }
   ],
-  badges: [
-    { type: badgesSchema }
-  ]
+  badges: [{ type: badgesSchema }]
 })
 const nameSchema = schema({ name: String })
 const friendsIdSchema = schema({ id: String })
@@ -47,12 +45,18 @@ const addressSchema = schema({
 })
 const UserSchema = new Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: [true, 'Email must be unique'] },
+  email: {
+    type: String,
+    required: true,
+    unique: [true, 'Email must be unique']
+  },
   password: { type: String, required: true },
   photo: String,
-  address: [{
-    type: addressSchema
-  }],
+  address: [
+    {
+      type: addressSchema
+    }
+  ],
   telephone: Number,
   cpf: Number,
   favorites: {
@@ -65,9 +69,13 @@ const UserSchema = new Schema({
   PostsUserSchema: [{ type: postsUserSchema }]
 })
 
-UserSchema.path('email').validate(async (email: string) => {
-  const emailCount = await mongoose.models.User.countDocuments({ email })
-  return !emailCount
-}, 'Already exists in the database', CustomDocuments.DUPLICATED)
+UserSchema.path('email').validate(
+  async (email: string) => {
+    const emailCount = await mongoose.models.User.countDocuments({ email })
+    return !emailCount
+  },
+  'Already exists in the database',
+  CustomDocuments.DUPLICATED
+)
 
 export const UserModel: Model<UserDocument> = mongoose.model('User', UserSchema)

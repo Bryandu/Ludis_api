@@ -1,5 +1,5 @@
 export interface Err extends Error {
-    code: number
-    message: string
-    description: string
+  code: number
+  message: string
+  description: string
 }
