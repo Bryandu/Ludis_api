@@ -17,7 +17,7 @@ export interface User {
   _id?: string
   name: string
   email: string
-  password: number | string
+  password: string
   address: UserAddress
   telephone: number
   cpf: number

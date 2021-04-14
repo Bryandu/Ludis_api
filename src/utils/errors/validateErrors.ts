@@ -20,7 +20,6 @@ export class ValidateError {
     const kideError = Object.values(error.errors).filter(
       element => element.kind === 'DUPLICATED'
     )
-    console.log(kideError)
     if (kideError.length) {
       return { code: 409, message: error.message }
     } else {

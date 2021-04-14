@@ -1,5 +1,8 @@
 {
     "App": {
+        "database": {
+            "mongoUrl": "mongodb+srv://bryan_ludis_adm:2HPdokFfFNbjY199@cluster0.rvfi8.mongodb.net/dbLudis_jestTests?retryWrites=true&w=majority"
+        },
         "resources": {
             "ViaCep": {
                 "apiUrl": "https://viacep.com.br/ws"

@@ -1,4 +1,5 @@
 import { User } from '@/@types/user.types'
+import { AuthService } from '@/clients/auth'
 import mongoose, { Document, Model, Schema } from 'mongoose'
 
 export interface UserDocument extends Omit<User, '_id'>, Document {}
@@ -77,5 +78,16 @@ UserSchema.path('email').validate(
   'Already exists in the database',
   CustomDocuments.DUPLICATED
 )
+
+UserSchema.pre<UserDocument>('save', async function (): Promise<void> {
+  if (this.password || !this.isModified('password')) {
+    try {
+      const hashedPassword = await AuthService.hashPassword(this.password)
+      this.password = hashedPassword
+    } catch (error) {
+      console.error(`Error hashing the password for the user ${this.name}`)
+    }
+  }
+})
 
 export const UserModel: Model<UserDocument> = mongoose.model('User', UserSchema)

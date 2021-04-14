@@ -16,7 +16,7 @@ import { ValidateError } from '@/utils/errors/validateErrors'
 export class UserController extends ValidateError {
   @Get('')
   private async getAll(
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
@@ -36,7 +36,7 @@ export class UserController extends ValidateError {
   ): Promise<void> {
     const user = await UserModel.findById(req.params.id)
     if (!user) {
-      next(
+      return next(
         new InternalError(
           'User not found',
           404,
@@ -44,7 +44,7 @@ export class UserController extends ValidateError {
         )
       )
     }
-    user && res.send(user)
+    res.send(user)
   }
 
   @Post('')
@@ -59,13 +59,21 @@ export class UserController extends ValidateError {
   }
 
   @Put('address/:id')
-  private async updateAddress(req: Request, res: Response, next: NextFunction) {
+  private async updateAddress(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     const { id } = req.params
-    try {
-      await UserModel.updateOne({ _id: id }, { address: req.body })
+    const response = await UserModel.updateOne(
+      { _id: id },
+      { address: req.body }
+    )
+    if (response.n) {
+      console.log(response)
       res.send(req.body)
-    } catch (err) {
-      next(new InternalError(err.message, err.code))
+    } else {
+      next(new InternalError('Address update failed'))
     }
   }
 }
