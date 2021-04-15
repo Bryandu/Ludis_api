@@ -3,6 +3,10 @@
         "database": {
             "mongoUrl": "mongodb+srv://bryan_ludis_adm:2HPdokFfFNbjY199@cluster0.rvfi8.mongodb.net/dbLudis_test?retryWrites=true&w=majority"
         },
+        "auth": {
+            "key": "ludistoken",
+            "expiresIn": "1h"
+        },
         "resources": {
             "ViaCep": {
                 "apiUrl": "https://viacep.com.br/ws"

@@ -1,4 +1,4 @@
-import { AuthService } from '@/clients/auth'
+import { AuthService } from '@/services/auth'
 
 describe('User functional tests', () => {
   it('should return 200', async done => {
@@ -33,7 +33,7 @@ describe('User functional tests', () => {
 
   it('should get user by id', async done => {
     const user = {
-      _id: '6075d6b597044ab0564bcc0e',
+      _id: '60783b541ce7865c0e7c4247',
       favorites: {
         friends: [],
         sports: [],
@@ -41,7 +41,7 @@ describe('User functional tests', () => {
       },
       name: 'Bryan Willes',
       email: 'animeronumero1@hotmail.com',
-      password: '12345678',
+      password: '$2b$10$uFUaytw9A3COG0FIhaYAHuLjtavbZXlw2mkrqT9LXPQmqp7bNqVby',
       telephone: 35991721586,
       cpf: 12002002020,
       address: [],
@@ -51,9 +51,11 @@ describe('User functional tests', () => {
     }
 
     const response = await global.testRequest.get(
-      '/users/6075d6b597044ab0564bcc0e'
+      '/users/60783b541ce7865c0e7c4247'
     )
-    expect(response.body).toEqual(user)
+    expect(response.body).toEqual(
+      expect.objectContaining({ ...user, password: expect.any(String) })
+    )
     done()
   })
 
@@ -78,9 +80,9 @@ describe('User functional tests', () => {
 
   it('should get user by id throw error 404', async done => {
     const response = await global.testRequest.get(
-      '/users/6075d6b597044ab0564bcc0e'
+      '/users/60783b541ce7865c0e7c4248'
     )
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(404)
     done()
   })
 
@@ -122,6 +124,41 @@ describe('User functional tests', () => {
 
     const response = await global.testRequest.post('/users').send(newUser)
     expect(response.status).toBe(409)
+    done()
+  })
+})
+
+describe.only('When authtenticate', () => {
+  it('should contain tolken', async done => {
+    const newUser = {
+      name: 'Bryan Willes',
+      password: '12345678',
+      email: 'animeronumero1@hotmail.com'
+    }
+
+    const response = await global.testRequest
+      .post('/users/authenticate')
+      .send(newUser)
+    expect(response.body).toEqual(
+      expect.objectContaining({ token: expect.any(String) })
+    )
+    done()
+  })
+
+  it('should return error when password does not match', async done => {
+    const newUser = {
+      name: 'Bryan Willes',
+      password: '12345679',
+      email: 'animeronumero1@hotmail.com'
+    }
+
+    const response = await global.testRequest
+      .post('/users/authenticate')
+      .send(newUser)
+    expect(response.body).toEqual({
+      message: 'Unauthorized! Password does not match!',
+      code: 401
+    })
     done()
   })
 })

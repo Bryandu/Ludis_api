@@ -10,6 +10,7 @@ import { UserModel } from '@/models/user.model'
 import { errorMiddleware } from '@/middlewares/errors/error'
 import { InternalError } from '@/utils/errors/internalError'
 import { ValidateError } from '@/utils/errors/validateErrors'
+import { AuthService } from '@/services/auth'
 
 @Controller('users')
 @ClassErrorMiddleware(errorMiddleware)
@@ -45,6 +46,29 @@ export class UserController extends ValidateError {
       )
     }
     res.send(user)
+  }
+
+  @Post('authenticate')
+  private async authenticateUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const user = await UserModel.findOne({ email: req.body.email })
+    if (!user) {
+      return next(new InternalError('User not found!', 404))
+    }
+    if (
+      !(await AuthService.comparePassword(req.body.password, user.password))
+    ) {
+      return next(
+        new InternalError('Unauthorized! Password does not match!', 401)
+      )
+    }
+    const token = AuthService.createToken(user.toJSON(), 'test')
+    res.status(200).send({
+      token: token
+    })
   }
 
   @Post('')
