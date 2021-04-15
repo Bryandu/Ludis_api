@@ -3,6 +3,7 @@ import {
   ClassErrorMiddleware,
   Controller,
   Get,
+  Middleware,
   Post,
   Put
 } from '@overnightjs/core'
@@ -11,6 +12,7 @@ import { errorMiddleware } from '@/middlewares/errors/error'
 import { InternalError } from '@/utils/errors/internalError'
 import { ValidateError } from '@/utils/errors/validateErrors'
 import { AuthService } from '@/services/auth'
+import { authMiddleware } from '@/middlewares/auth/auth.middlerawe'
 
 @Controller('users')
 @ClassErrorMiddleware(errorMiddleware)
@@ -82,6 +84,7 @@ export class UserController extends ValidateError {
     }
   }
 
+  @Middleware(authMiddleware)
   @Put('address/:id')
   private async updateAddress(
     req: Request,

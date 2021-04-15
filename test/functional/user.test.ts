@@ -97,8 +97,14 @@ describe('User functional tests', () => {
       reference: null,
       country: 'Brasil'
     }
+    const token = AuthService.createToken({
+      name: 'Bryan Willes',
+      email: `animeronumero${Math.random()}@hotmail.com`,
+      password: '12345678'
+    })
     const response = await global.testRequest
       .put('/users/address/60745c268ecb32feff0694ea')
+      .set({ 'x-access-token': token })
       .send(address)
     expect(response.body).toEqual({
       code: 500,
@@ -128,7 +134,7 @@ describe('User functional tests', () => {
   })
 })
 
-describe.only('When authtenticate', () => {
+describe('When authtenticate', () => {
   it('should contain tolken', async done => {
     const newUser = {
       name: 'Bryan Willes',
