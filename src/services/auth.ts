@@ -21,9 +21,10 @@ export class AuthService {
     payload: string | Record<string, unknown> | Buffer,
     secret: Secret = get('App.auth.key')
   ): string {
-    return jwt.sign(payload, secret, {
+    const token = jwt.sign(payload, secret, {
       expiresIn: get('App.auth.expiresIn')
     })
+    return token
   }
 
   static decodeToken(

@@ -18,6 +18,7 @@ import { authMiddleware } from '@/middlewares/auth/auth.middlerawe'
 @ClassErrorMiddleware(errorMiddleware)
 export class UserController extends ValidateError {
   @Get('')
+  @Middleware(authMiddleware)
   private async getAll(
     _req: Request,
     res: Response,
@@ -32,6 +33,7 @@ export class UserController extends ValidateError {
   }
 
   @Get(':id')
+  @Middleware(authMiddleware)
   private async getUserById(
     req: Request,
     res: Response,
@@ -67,7 +69,7 @@ export class UserController extends ValidateError {
         new InternalError('Unauthorized! Password does not match!', 401)
       )
     }
-    const token = AuthService.createToken(user.toJSON(), 'test')
+    const token = AuthService.createToken(user.toJSON())
     res.status(200).send({
       token: token
     })
@@ -84,23 +86,23 @@ export class UserController extends ValidateError {
     }
   }
 
-  @Middleware(authMiddleware)
   @Put('address/:id')
+  @Middleware(authMiddleware)
   private async updateAddress(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     const { id } = req.params
-    const response = await UserModel.updateOne(
-      { _id: id },
-      { address: req.body }
-    )
-    if (response.n) {
-      console.log(response)
-      res.send(req.body)
+    if (req.body !== {}) {
+      try {
+        await UserModel.updateOne({ _id: id }, { $push: { address: req.body } })
+        res.send(req.body)
+      } catch (error) {
+        next(new InternalError(error.message))
+      }
     } else {
-      next(new InternalError('Address update failed'))
+      next(new InternalError('Address required!', 415))
     }
   }
 }
