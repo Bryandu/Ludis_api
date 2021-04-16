@@ -1,0 +1,7 @@
+{
+    "name": "ludis-api",
+    "version": 1,
+    "env": {
+      "DB_STRINGCONECTION": "@mongodb-uri"
+    }
+  }
