@@ -2,7 +2,14 @@ import { AuthService } from '@/services/auth'
 
 describe('User functional tests', () => {
   it('should return 200', async done => {
-    const { status } = await global.testRequest.get('/users')
+    const token = AuthService.createToken({
+      name: 'Bryan Willes',
+      email: `animeronumero${Math.random()}@hotmail.com`,
+      password: '12345678'
+    })
+    const { status } = await global.testRequest
+      .get('/users')
+      .set({ 'x-access-token': token })
     expect(status).toBe(200)
     done()
   })
@@ -49,10 +56,15 @@ describe('User functional tests', () => {
       PostsUserSchema: [],
       __v: 0
     }
+    const token = AuthService.createToken({
+      name: 'Bryan Willes',
+      email: `animeronumero${Math.random()}@hotmail.com`,
+      password: '12345678'
+    })
 
-    const response = await global.testRequest.get(
-      '/users/60783b541ce7865c0e7c4247'
-    )
+    const response = await global.testRequest
+      .get('/users/60783b541ce7865c0e7c4247')
+      .set({ 'x-access-token': token })
     expect(response.body).toEqual(
       expect.objectContaining({ ...user, password: expect.any(String) })
     )
@@ -79,9 +91,14 @@ describe('User functional tests', () => {
   })
 
   it('should get user by id throw error 404', async done => {
-    const response = await global.testRequest.get(
-      '/users/60783b541ce7865c0e7c4248'
-    )
+    const token = AuthService.createToken({
+      name: 'Bryan Willes',
+      email: `animeronumero${Math.random()}@hotmail.com`,
+      password: '12345678'
+    })
+    const response = await global.testRequest
+      .get('/users/60783b541ce7865c0e7c4248')
+      .set({ 'x-access-token': token })
     expect(response.status).toBe(404)
     done()
   })
@@ -106,10 +123,7 @@ describe('User functional tests', () => {
       .put('/users/address/60745c268ecb32feff0694ea')
       .set({ 'x-access-token': token })
       .send(address)
-    expect(response.body).toEqual({
-      code: 500,
-      message: 'Address update failed'
-    })
+    expect(response.body).toEqual(expect.objectContaining(address))
     done()
   })
 

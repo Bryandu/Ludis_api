@@ -5,9 +5,10 @@ import { Server } from '@overnightjs/core'
 import { dbClose, dbConect } from '@/database/database'
 import helmet from 'helmet'
 import { Error } from 'mongoose'
+import { get } from 'config'
 
 export class SetupApp extends Server {
-  constructor(private port = process.env.PORT || 4000) {
+  constructor(private port = process.env.PORT || get('App.port')) {
     super()
   }
 
