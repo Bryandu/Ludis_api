@@ -1,7 +1,17 @@
 {
     "App": {
+        "port": "APP_PORT",
         "database": {
-            "mongoUrl": "process.env.DB_STRINGCONECTION"
+            "mongoUrl": "DB_URL"
+        },
+        "auth": {
+            "key": "JWT_KEY",
+            "expiresIn": "JWT_EXPIRES"
+        },
+        "resources": {
+            "ViaCep": {
+                "apiUrl": "VIACEP_URL"
+            }
         }
     }
 }
