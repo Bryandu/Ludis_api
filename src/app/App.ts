@@ -8,7 +8,7 @@ import { Error } from 'mongoose'
 import { get } from 'config'
 
 export class SetupApp extends Server {
-  constructor(private port = process.env.PORT || get('App.port')) {
+  constructor(private port = process.env.APP_PORT || get('App.port')) {
     super()
   }
 
