@@ -1,7 +1,7 @@
 import mongoose, { Mongoose } from 'mongoose'
 import config, { IConfig } from 'config'
 
-const mongoDbConfig: IConfig = config.get('App.database')
+const mongoDbConfig: IConfig = config.get('app.database')
 
 export const dbConect = async (): Promise<Mongoose> => {
   return await mongoose.connect(mongoDbConfig.get('mongoUrl'), {

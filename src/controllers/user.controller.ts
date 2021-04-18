@@ -71,6 +71,7 @@ export class UserController extends ValidateError {
     }
     const token = AuthService.createToken(user.toJSON())
     res.status(200).send({
+      ...user,
       token: token
     })
   }

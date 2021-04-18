@@ -1,14 +1,14 @@
-import '../utils/module-alias'
 import { UserController } from '../controllers/user.controller'
 import { Application, json, urlencoded } from 'express'
 import { Server } from '@overnightjs/core'
 import { dbClose, dbConect } from '@/database/database'
 import helmet from 'helmet'
 import { Error } from 'mongoose'
-import { get } from 'config'
+import config from 'config'
+import cors from 'cors'
 
 export class SetupApp extends Server {
-  constructor(private port = process.env.APP_PORT || get('App.port')) {
+  constructor(private port = config.get('app.port')) {
     super()
   }
 
@@ -23,6 +23,7 @@ export class SetupApp extends Server {
   }
 
   private SetupExpress(): void {
+    this.app.use(cors())
     this.app.use(helmet())
     this.app.use(
       urlencoded({
