@@ -5,17 +5,20 @@ import { Server } from '@overnightjs/core'
 import { dbClose, dbConect } from '@/database/database'
 import helmet from 'helmet'
 import { Error } from 'mongoose'
-import { get } from 'config'
+import config from 'config'
+import dotenv from 'dotenv'
 
 export class SetupApp extends Server {
-  constructor(private port = process.env.PORT || get('App.port')) {
+  constructor(private port = config.get('App.port')) {
     super()
   }
 
   public async init(): Promise<void> {
+    dotenv.config()
     this.SetupExpress()
     this.SetupControllers()
     await this.SetupDatabase()
+    console.log(config.get('App'))
   }
 
   public async close(): Promise<void> {

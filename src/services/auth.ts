@@ -1,11 +1,12 @@
 import { compare, hash } from 'bcrypt'
 import jwt, { Secret, VerifyOptions } from 'jsonwebtoken'
-import { get } from 'config'
+import config from 'config'
 import { User } from '@/@types/user.types'
 
 export type DecodedUser = User
 
 export class AuthService {
+
   static async hashPassword(password: string, salt = 10): Promise<string> {
     return await hash(password, salt)
   }
@@ -19,17 +20,17 @@ export class AuthService {
 
   static createToken(
     payload: string | Record<string, unknown> | Buffer,
-    secret: Secret = get('App.auth.key')
+    secret: Secret = config.get('App.auth.key')
   ): string {
     const token = jwt.sign(payload, secret, {
-      expiresIn: get('App.auth.expiresIn')
+      expiresIn: config.get('App.auth.expiresIn')
     })
     return token
   }
 
   static decodeToken(
     token: string,
-    secreteKey: Secret | string = get('App.auth.key'),
+    secreteKey: Secret | string = config.get('App.auth.key'),
     options?: VerifyOptions
   ): User {
     return jwt.verify(token, secreteKey, options) as User
