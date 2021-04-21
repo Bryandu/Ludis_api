@@ -18,7 +18,6 @@ export class SetupApp extends Server {
     this.SetupExpress()
     this.SetupControllers()
     await this.SetupDatabase()
-    console.log(config.get('App'))
   }
 
   public async close(): Promise<void> {

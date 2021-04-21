@@ -19,17 +19,17 @@ export class AuthService {
 
   static createToken(
     payload: string | Record<string, unknown> | Buffer,
-    secret: Secret = config.get('app.auth.key')
+    secret: Secret = config.get('App.auth.key')
   ): string {
     const token = jwt.sign(payload, secret, {
-      expiresIn: config.get('app.auth.expiresIn')
+      expiresIn: config.get('App.auth.expiresIn')
     })
     return token
   }
 
   static decodeToken(
     token: string,
-    secreteKey: Secret | string = config.get('app.auth.key'),
+    secreteKey: Secret | string = config.get('App.auth.key'),
     options?: VerifyOptions
   ): User {
     return jwt.verify(token, secreteKey, options) as User
