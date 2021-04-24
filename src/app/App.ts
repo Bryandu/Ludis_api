@@ -1,7 +1,7 @@
 import { UserController } from '../controllers/user.controller'
 import { Application, json, urlencoded } from 'express'
 import { Server } from '@overnightjs/core'
-import { dbClose, dbConect } from '@/database/database'
+import { dbClose, dbConnect } from '@/database/database'
 import helmet from 'helmet'
 import { Error } from 'mongoose'
 import config from 'config'
@@ -42,7 +42,7 @@ export class SetupApp extends Server {
 
   private async SetupDatabase(): Promise<void> {
     try {
-      await dbConect()
+      await dbConnect()
     } catch (error) {
       throw new Error(error)
     }
