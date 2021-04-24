@@ -1,0 +1,11 @@
+---
+application:
+  name: "ludis-api"
+  project: "ludis_api"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-ludis-api"
+  routes:
+  - application_name: "ludis-api"
+    paths:
+    - "/*"
