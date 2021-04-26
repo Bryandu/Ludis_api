@@ -9,7 +9,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 
 export class SetupApp extends Server {
-  constructor(private port = config.get('App.port')) {
+  constructor(private port = config.get('App.port') || process.env.PORT) {
     super()
   }
 
