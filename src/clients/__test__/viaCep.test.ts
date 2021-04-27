@@ -23,7 +23,7 @@ describe('ViaCep client', () => {
     mockedAxios.get.mockRejectedValue(new ClientErrorRequest('500'))
 
     await expect(mockedAxios.get).rejects.toThrowError(
-      'Unexpected error when tryng to communication to ViaCep: 500'
+      'Unexpected error when trying to communication to ViaCep: 500'
     )
   })
   test('calls axios and rejected response', async () => {

@@ -7,7 +7,7 @@ const ViaCepResourceConfig: IConfig = config.get('App.resources.ViaCep')
 
 export class ClientErrorRequest extends InternalError {
   constructor(message: string) {
-    super(`Unexpected error when tryng to communication to ViaCep: ${message}`)
+    super(`Unexpected error when trying to communication to ViaCep: ${message}`)
   }
 }
 
@@ -28,7 +28,7 @@ export class ViaCep {
       if (error.response && error.response.status) {
         throw new ClientErrorResponse(
           `Error ${JSON.stringify(error.response.data)}, code: ${
-            error.reesponse.status
+            error.response.status
           }`
         )
       }

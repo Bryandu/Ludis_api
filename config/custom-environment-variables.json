@@ -1,17 +1,16 @@
 {
-    "App": {
-        "port": "APP_PORT",
-        "database": {
-            "mongoUrl": "DB_URL"
-        },
-        "auth": {
-            "key": "JWT_KEY",
-            "expiresIn": "JWT_EXPIRES"
-        },
-        "resources": {
-            "ViaCep": {
-                "apiUrl": "VIACEP_URL"
-            }
-        }
-    }
+  "App": {
+      "database": {
+          "mongoUrl": "DB_STRINGCONECTION"
+      },
+      "auth": {
+          "key": "JWT_KEY",
+          "expiresIn": "JWT_EXPIRES"
+      },
+      "resources": {
+          "ViaCep": {
+              "apiUrl": "VIACEP_URL"
+          }
+      }
+  }
 }

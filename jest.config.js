@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('path')
 const root = resolve(__dirname)
 const { pathsToModuleNameMapper } = require('ts-jest/utils')
@@ -8,7 +9,7 @@ module.exports = {
 
   clearMocks: true,
 
-  coverageDirectory: 'tests/coveraga',
+  coverageDirectory: 'tests/coverage',
 
   coverageProvider: 'v8',
 
@@ -22,8 +23,5 @@ module.exports = {
 
   testEnvironment: 'node',
 
-  testMatch: [
-    '<rootDir>/src/**/*.test.ts'
-  ]
-
+  testMatch: ['<rootDir>/src/**/*.test.ts']
 }

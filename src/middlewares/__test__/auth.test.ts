@@ -1,5 +1,5 @@
 import { AuthService } from '@/services/auth'
-import { authMiddleware } from '../auth/auth.middlerawe'
+import { authMiddleware } from '../auth/auth.middleware'
 
 describe('Auth jwt middleware', () => {
   it('should create jwt and send middleware', () => {

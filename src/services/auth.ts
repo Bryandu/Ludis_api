@@ -6,7 +6,6 @@ import { User } from '@/@types/user.types'
 export type DecodedUser = User
 
 export class AuthService {
-
   static async hashPassword(password: string, salt = 10): Promise<string> {
     return await hash(password, salt)
   }

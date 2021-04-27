@@ -12,7 +12,7 @@ import { errorMiddleware } from '@/middlewares/errors/error'
 import { InternalError } from '@/utils/errors/internalError'
 import { ValidateError } from '@/utils/errors/validateErrors'
 import { AuthService } from '@/services/auth'
-import { authMiddleware } from '@/middlewares/auth/auth.middlerawe'
+import { authMiddleware } from '@/middlewares/auth/auth.middleware'
 
 @Controller('users')
 @ClassErrorMiddleware(errorMiddleware)
@@ -45,7 +45,7 @@ export class UserController extends ValidateError {
         new InternalError(
           'User not found',
           404,
-          'The user id canot be found in database'
+          'The user id cannot be found in database'
         )
       )
     }
@@ -71,6 +71,7 @@ export class UserController extends ValidateError {
     }
     const token = AuthService.createToken(user.toJSON())
     res.status(200).send({
+      ...user,
       token: token
     })
   }

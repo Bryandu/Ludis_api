@@ -103,7 +103,7 @@ describe('User functional tests', () => {
     done()
   })
 
-  it('shold update address user', async done => {
+  it('should update address user', async done => {
     const address = {
       zipCode: 37045015,
       street: 'Rua Joaquim Aparecido Ferreira',
@@ -148,8 +148,8 @@ describe('User functional tests', () => {
   })
 })
 
-describe('When authtenticate', () => {
-  it('should contain tolken', async done => {
+describe('When authenticate', () => {
+  it('should contain token', async done => {
     const newUser = {
       name: 'Bryan Willes',
       password: '12345678',
