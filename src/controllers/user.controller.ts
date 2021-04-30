@@ -52,13 +52,15 @@ export class UserController extends ValidateError {
     res.send(user)
   }
 
-  @Post('authenticate')
+  @Post('login')
   private async authenticateUser(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const user = await UserModel.findOne({ email: req.body.email })
+    const user = await UserModel.findOne({
+      email: req.body.email
+    })
     if (!user) {
       return next(new InternalError('User not found!', 404))
     }
@@ -70,18 +72,28 @@ export class UserController extends ValidateError {
       )
     }
     const token = AuthService.createToken(user.toJSON())
+    console.log(user)
     res.status(200).send({
-      ...user,
+      user,
       token: token
     })
   }
 
   @Post('')
   private async createUser(req: Request, res: Response) {
+    const { email } = req.body
+    const userModel = new UserModel(req.body)
     try {
-      const userModel = new UserModel(req.body)
-      const result = await userModel.save()
-      res.status(201).send(result)
+      const user = await UserModel.findOne({ email })
+      if (!user) {
+        const result = await userModel.save()
+        res.status(201).send(result)
+      } else {
+        res.status(409).send({
+          code: 409,
+          message: 'Email already exists!'
+        })
+      }
     } catch (error) {
       this.sendResponseErrorValidade(res, error)
     }

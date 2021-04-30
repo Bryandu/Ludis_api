@@ -3,7 +3,6 @@ import mongoose, { Model, Schema } from 'mongoose'
 import { schema, CustomDocuments, UserDocument } from '@/utils/schemaCreate'
 import { postsUserSchema } from './post.model'
 
-const friendsIdSchema = schema({ type: Schema.Types.ObjectId })
 const addressSchema = schema({
   zipCode: Number,
   street: String,
@@ -12,9 +11,13 @@ const addressSchema = schema({
   district: String,
   city: String,
   reference: String,
-  country: String
+  country: String,
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 })
-const UserSchema = new Schema({
+const UserSchema = schema({
   name: { type: String, required: true },
   email: {
     type: String,
@@ -35,8 +38,8 @@ const UserSchema = new Schema({
     sports: [{ type: Schema.Types.ObjectId }],
     places: [{ type: Schema.Types.ObjectId }]
   },
-  friends: [{ type: friendsIdSchema }],
-  singupDate: Date,
+  friends: [{ type: Schema.Types.ObjectId }],
+  create_at: { type: Date, default: Date.now() },
   PostsUserSchema: [{ type: postsUserSchema, ref: 'PostsUser' }]
 })
 

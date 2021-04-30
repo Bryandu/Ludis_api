@@ -4,7 +4,6 @@ import { Server } from '@overnightjs/core'
 import { dbClose, dbConnect } from '@/database/database'
 import helmet from 'helmet'
 import { Error } from 'mongoose'
-import config from 'config'
 import cors from 'cors'
 
 export class SetupApp extends Server {
@@ -23,7 +22,6 @@ export class SetupApp extends Server {
   }
 
   private SetupExpress(): void {
-    console.log(config.get('App'))
     this.app.use(cors())
     this.app.use(helmet())
     this.app.use(

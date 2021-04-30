@@ -13,7 +13,7 @@ describe('User functional tests', () => {
     expect(status).toBe(200)
     done()
   })
-  it('should create user', async done => {
+  it.skip('should create user', async done => {
     const newUser = {
       name: 'Bryan Willes',
       email: `animeronumero${Math.random()}@hotmail.com`,
@@ -35,6 +35,22 @@ describe('User functional tests', () => {
     expect(response.body).toEqual(
       expect.objectContaining({ ...newUser, password: expect.any(String) })
     )
+    done()
+  })
+
+  it('should return 409 when user already exists', async done => {
+    const user = {
+      name: 'Bryan Willes',
+      password: '12345679',
+      email: 'animeronumero1@hotmail.com'
+    }
+
+    const response = await global.testRequest.post('/users').send(user)
+    console.log(response)
+    expect(response.body).toEqual({
+      code: 409,
+      message: 'Email already exists!'
+    })
     done()
   })
 
@@ -156,9 +172,7 @@ describe('When authenticate', () => {
       email: 'animeronumero1@hotmail.com'
     }
 
-    const response = await global.testRequest
-      .post('/users/authenticate')
-      .send(newUser)
+    const response = await global.testRequest.post('/users/login').send(newUser)
     expect(response.body).toEqual(
       expect.objectContaining({ token: expect.any(String) })
     )
@@ -172,9 +186,7 @@ describe('When authenticate', () => {
       email: 'animeronumero1@hotmail.com'
     }
 
-    const response = await global.testRequest
-      .post('/users/authenticate')
-      .send(newUser)
+    const response = await global.testRequest.post('/users/login').send(newUser)
     expect(response.body).toEqual({
       message: 'Unauthorized! Password does not match!',
       code: 401
