@@ -1,15 +1,18 @@
 import { SetupApp } from './../src/app/App'
 import supertest from 'supertest'
+import { UserModel } from '@/models/user.model'
 
-let server = new SetupApp()
+const server = new SetupApp()
+// const userModel = new UserModel()
+
 beforeAll(async done => {
-  server = new SetupApp()
   await server.init()
   global.testRequest = supertest(server.getApp())
   done()
 })
 
 afterAll(async done => {
+  await UserModel.deleteMany()
   await server.close()
   done()
 })
