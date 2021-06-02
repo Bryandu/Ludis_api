@@ -1,0 +1,16 @@
+{
+  "App": {
+      "database": {
+          "mongoUrl": "DB_STRINGCONECTION"
+      },
+      "auth": {
+          "key": "JWT_KEY",
+          "expiresIn": "JWT_EXPIRES"
+      },
+      "resources": {
+          "ViaCep": {
+              "apiUrl": "VIACEP_URL"
+          }
+      }
+  }
+}

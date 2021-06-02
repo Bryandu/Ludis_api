@@ -1,6 +1,6 @@
 node_modules
-config/
-!config/custom-environment-variables.json
+config/default.json
+config/test.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/react,yarn,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,yarn,node
