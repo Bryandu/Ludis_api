@@ -11,7 +11,9 @@
     "postbuild": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "dev": "ts-node-dev -r dotenv/config -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts",
     "test:functional": "jest --projects ./test/functional --runInBand",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "@overnightjs/core": "^1.7.5",

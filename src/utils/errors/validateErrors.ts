@@ -14,9 +14,10 @@ export class ValidateError {
     }
   }
 
-  private validationResponse(
-    error: mongoose.Error.ValidationError
-  ): { code: number; message: string } {
+  private validationResponse(error: mongoose.Error.ValidationError): {
+    code: number
+    message: string
+  } {
     const kindaError = Object.values(error.errors).filter(
       element => element.kind === 'DUPLICATED'
     )
