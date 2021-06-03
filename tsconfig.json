@@ -1,25 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es2017" ,
+    "target": "ES5",
     "module": "commonjs" ,
     "lib": [
       "ES6",
       "dom"
     ] ,
     "allowJs": true,
-    "declaration": true,                    
+    "declaration": true,
     "sourceMap": true,
     "outDir": "./dist",
     "declarationDir": "./dist/@types",
-    "removeComments": true,                     
-    "strict": true, 
-    "noImplicitAny": true,                       
-    "strictNullChecks": true,                    
-    "strictFunctionTypes": true,                 
-    "noImplicitThis": true,                     
-    "alwaysStrict": true,                        
-    "noImplicitReturns": true,                   
-    "baseUrl": "./",                             
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
       "@test/*": ["./test/*"]
@@ -29,10 +29,10 @@
       "./src/@types"
     ],
     "esModuleInterop": true,
-   
+
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    
+
     "skipLibCheck": true ,
     "forceConsistentCasingInFileNames": true
   },
